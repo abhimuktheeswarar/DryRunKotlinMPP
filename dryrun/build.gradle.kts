@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.dokka") version Versions.dokka
     id("maven-publish")
@@ -16,13 +17,7 @@ kotlin {
     android {
         publishLibraryVariants("release", "debug")
     }
-    ios {
-        binaries {
-            framework {
-                baseName = "dryrun"
-            }
-        }
-    }
+    ios()
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -58,6 +53,12 @@ kotlin {
         }
         val iosMain by getting
         val iosTest by getting
+
+        cocoapods {
+            // Configure fields required by CocoaPods.
+            summary = "DryRunKotlinMPP Kotlin/Native module CocoaPods"
+            homepage = "https://github.com/abhimuktheeswarar/DryRunKotlinMPP"
+        }
     }
 }
 
