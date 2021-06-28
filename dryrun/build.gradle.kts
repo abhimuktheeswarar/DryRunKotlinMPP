@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
@@ -84,3 +85,95 @@ val packForXcode by tasks.creating(Sync::class) {
 }
 
 tasks.getByName("build").dependsOn(packForXcode)
+
+//----------------------------------------------------------------------------------
+
+val dokkaOutputDir = "$buildDir/docs"
+
+tasks.dokkaHtml.configure {
+    outputDirectory.set(file(dokkaOutputDir))
+}
+
+val deleteDokkaOutputDir by tasks.register<Delete>("deleteDokkaOutputDirectory") {
+    delete(dokkaOutputDir)
+}
+
+val javadocJar = tasks.register<Jar>("javadocJar") {
+    dependsOn(deleteDokkaOutputDir, tasks.dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(dokkaOutputDir)
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "sonatype"
+            setUrl { "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/" }
+            credentials {
+                username = gradleLocalProperties(
+                    rootDir).getProperty("sonatypeUsername",
+                    System.getenv("SONATYPE_USERNAME"))
+                password = gradleLocalProperties(
+                    rootDir).getProperty("sonatypePassword",
+                    System.getenv("SONATYPE_PASSWORD"))
+            }
+        }
+        maven {
+            name = "Snapshot"
+            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+            credentials {
+                username = gradleLocalProperties(
+                    rootDir).getProperty("sonatypeUsername",
+                    System.getenv("SONATYPE_USERNAME"))
+                password = gradleLocalProperties(
+                    rootDir).getProperty("sonatypePassword",
+                    System.getenv("SONATYPE_PASSWORD"))
+            }
+        }
+    }
+
+    publications {
+
+        withType<MavenPublication> {
+            artifact(javadocJar)
+            pom {
+                name.set("Flywheel")
+                description.set("Kotlin-Multiplatform state management library")
+                url.set("https://github.com/abhimuktheeswarar/DryRunKotlinMPP")
+                licenses {
+                    license {
+                        name.set("Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                issueManagement {
+                    system.set("Github issues")
+                    url.set("https://github.com/abhimuktheeswarar/DryRunKotlinMPP/issues")
+                }
+                scm {
+                    connection.set("https://github.com/abhimuktheeswarar/DryRunKotlinMPP.git")
+                    url.set("https://github.com/abhimuktheeswarar/DryRunKotlinMPP")
+                }
+                developers {
+                    developer {
+                        name.set("Abhi Muktheeswarar")
+                        email.set(gradleLocalProperties(
+                            rootDir).getProperty("developerEmail",
+                            System.getenv("DEVELOPER_EMAIL")))
+                    }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    val localProps = gradleLocalProperties(rootDir)
+    val signingKey = localProps.getProperty("signing.key", System.getenv("SIGNING_KEY"))
+    val signingPassword = localProps.getProperty(
+        "signing.password",
+        System.getenv("SIGNING_PASSWORD")
+    )
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications)
+}
