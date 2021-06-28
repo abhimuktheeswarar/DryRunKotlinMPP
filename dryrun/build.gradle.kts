@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.msabhi"
-version = "1.0.0-SNAPSHOT"
+version = "1.0.0-RC"
 
 kotlin {
     android {
@@ -155,7 +155,9 @@ publishing {
                         id.set(gradleLocalProperties(
                             rootDir).getProperty("developerId",
                             System.getenv("DEVELOPER_ID")))
-                        name.set("Abhi Muktheeswarar")
+                        name.set(gradleLocalProperties(
+                            rootDir).getProperty("developerName",
+                            System.getenv("DEVELOPER_NAME")))
                         email.set(gradleLocalProperties(
                             rootDir).getProperty("developerEmail",
                             System.getenv("DEVELOPER_EMAIL")))
