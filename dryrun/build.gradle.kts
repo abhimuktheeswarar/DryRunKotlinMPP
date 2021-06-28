@@ -108,19 +108,14 @@ publishing {
     repositories {
         maven {
             name = "sonatype"
-            setUrl { "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/" }
-            credentials {
-                username = gradleLocalProperties(
-                    rootDir).getProperty("sonatypeUsername",
-                    System.getenv("SONATYPE_USERNAME"))
-                password = gradleLocalProperties(
-                    rootDir).getProperty("sonatypePassword",
-                    System.getenv("SONATYPE_PASSWORD"))
+            setUrl {
+
+                val releasesRepoUrl =
+                    "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                val snapshotsRepoUrl =
+                    "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
             }
-        }
-        maven {
-            name = "Snapshot"
-            setUrl { "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
             credentials {
                 username = gradleLocalProperties(
                     rootDir).getProperty("sonatypeUsername",
@@ -137,12 +132,13 @@ publishing {
         withType<MavenPublication> {
             artifact(javadocJar)
             pom {
-                name.set("Flywheel")
+                name.set("DryRunKotlinMMPP")
                 description.set("Kotlin-Multiplatform state management library")
                 url.set("https://github.com/abhimuktheeswarar/DryRunKotlinMPP")
+                inceptionYear.set("2021")
                 licenses {
                     license {
-                        name.set("Apache License, Version 2.0")
+                        name.set("The Apache License, Version 2.0")
                         url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
                     }
                 }
@@ -156,6 +152,9 @@ publishing {
                 }
                 developers {
                     developer {
+                        id.set(gradleLocalProperties(
+                            rootDir).getProperty("developerId",
+                            System.getenv("DEVELOPER_ID")))
                         name.set("Abhi Muktheeswarar")
                         email.set(gradleLocalProperties(
                             rootDir).getProperty("developerEmail",
