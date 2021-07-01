@@ -11,13 +11,31 @@ plugins {
 }
 
 group = "com.msabhi"
-version = "1.0.0-RC"
+version = "1.0.1-RC"
 
 kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnit()
+        }
+    }
     android {
-        publishLibraryVariants("release", "debug")
+        //publishLibraryVariants("release", "debug")
+        publishAllLibraryVariants()
+    }
+    js(BOTH) {
+        browser()
+        nodejs()
     }
     ios()
+    watchos()
+    tvos()
+    macosX64()
+    linuxX64()
+    mingwX64()
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -30,17 +48,12 @@ kotlin {
                 implementation(Dependencies.KotlinTest.annotations)
             }
         }
-        val androidMain by getting {
+        val jvmMain by getting {
             dependencies {
                 implementation(kotlin("reflect", Versions.kotlin))
-                implementation(Dependencies.Coroutines.android)
-                implementation(Dependencies.Android.lifecycleRuntime)
-                implementation(Dependencies.Android.lifecycleViewModel)
             }
-
         }
-
-        val androidTest by getting {
+        val jvmTest by getting {
             dependencies {
                 implementation(Dependencies.KotlinTest.jvm)
                 implementation(Dependencies.KotlinTest.junit)
@@ -51,9 +64,59 @@ kotlin {
                 implementation(Dependencies.AndroidTest.rules)
             }
         }
-        val iosMain by getting
-        val iosTest by getting
-
+        val androidMain by getting {
+            dependencies {
+                implementation(kotlin("reflect", Versions.kotlin))
+                implementation(Dependencies.Coroutines.android)
+                implementation(Dependencies.Android.lifecycleRuntime)
+                implementation(Dependencies.Android.lifecycleViewModel)
+            }
+        }
+        val androidTest by getting {
+            dependsOn(jvmTest)
+        }
+        val jsMain by getting
+        val jsTest by getting
+        val nativeMain by creating
+        val nativeTest by creating
+        val appleMain by creating
+        val appleTest by creating
+        val iosMain by getting {
+            dependsOn(appleMain)
+        }
+        val iosTest by getting {
+            dependsOn(appleTest)
+        }
+        val watchosMain by getting {
+            dependsOn(appleMain)
+        }
+        val watchosTest by getting {
+            dependsOn(appleTest)
+        }
+        val tvosMain by getting {
+            dependsOn(appleMain)
+        }
+        val tvosTest by getting {
+            dependsOn(appleTest)
+        }
+        val macosX64Main by getting {
+            dependsOn(appleMain)
+        }
+        val macosX64Test by getting {
+            dependsOn(appleTest)
+        }
+        val linuxX64Main by getting {
+            dependsOn(nativeMain)
+        }
+        val linuxX64Test by getting {
+            dependsOn(nativeTest)
+        }
+        val mingwX64Main by getting {
+            dependsOn(nativeMain)
+        }
+        val mingwX64Test by getting {
+            dependsOn(nativeTest)
+        }
         cocoapods {
             // Configure fields required by CocoaPods.
             summary = "DryRunKotlinMPP Kotlin/Native module CocoaPods"
@@ -68,6 +131,10 @@ android {
     defaultConfig {
         minSdkVersion(Versions.Android.minSdk)
         targetSdkVersion(Versions.Android.targetSdk)
+    }
+    //Sample
+    dependencies {
+        debugImplementation(kotlin("reflect", Versions.kotlin))
     }
 }
 

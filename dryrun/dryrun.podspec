@@ -1,10 +1,10 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'dryrun'
-    spec.version                  = '1.0.0-RC'
+    spec.version                  = '1.0.1-RC'
     spec.homepage                 = 'https://github.com/abhimuktheeswarar/DryRunKotlinMPP'
     spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
-    spec.authors                  = { "Abhi Muktheeswarar" => "xxx@xxx.com" }
-    spec.license                  = { :type => "APACHE" }
+    spec.authors                  = ''
+    spec.license                  = ''
     spec.summary                  = 'DryRunKotlinMPP Kotlin/Native module CocoaPods'
 
     spec.static_framework         = true
@@ -34,7 +34,7 @@ Pod::Spec.new do |spec|
             :script => <<-SCRIPT
                 set -ev
                 REPO_ROOT="$PODS_TARGET_SRCROOT"
-                "$REPO_ROOT/../../../../../private/var/folders/mp/g1wk29253ld97p6n0cgnwt200000gn/T/wrap897loc/gradlew" -p "$REPO_ROOT" :dryrun:syncFramework \
+                "$REPO_ROOT/../gradlew" -p "$REPO_ROOT" :dryrun:syncFramework \
                     -Pkotlin.native.cocoapods.target=$KOTLIN_TARGET \
                     -Pkotlin.native.cocoapods.configuration=$CONFIGURATION \
                     -Pkotlin.native.cocoapods.cflags="$OTHER_CFLAGS" \
