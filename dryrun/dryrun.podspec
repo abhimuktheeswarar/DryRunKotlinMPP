@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'dryrun'
-    spec.version                  = '1.0.1-RC'
+    spec.version                  = '1.0.2-RC'
     spec.homepage                 = 'https://github.com/abhimuktheeswarar/DryRunKotlinMPP'
     spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
     spec.authors                  = ''

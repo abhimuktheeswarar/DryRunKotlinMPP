@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.msabhi"
-version = "1.0.1-RC"
+version = "1.0.2-RC"
 
 kotlin {
     jvm {
@@ -76,11 +76,23 @@ kotlin {
             dependsOn(jvmTest)
         }
         val jsMain by getting
-        val jsTest by getting
-        val nativeMain by creating
-        val nativeTest by creating
-        val appleMain by creating
-        val appleTest by creating
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test-js", Versions.kotlin))
+            }
+        }
+        val nativeMain by creating {
+            dependsOn(commonMain)
+        }
+        val nativeTest by creating {
+            dependsOn(commonTest)
+        }
+        val appleMain by creating {
+            dependsOn(commonMain)
+        }
+        val appleTest by creating {
+            dependsOn(commonTest)
+        }
         val iosMain by getting {
             dependsOn(appleMain)
         }
