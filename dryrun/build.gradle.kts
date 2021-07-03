@@ -4,6 +4,8 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
+    //id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
+    //id("com.prof18.kmp.fatframework.cocoa") version "0.2.1"
     id("com.android.library")
     id("org.jetbrains.dokka") version Versions.dokka
     id("maven-publish")
@@ -129,11 +131,11 @@ kotlin {
         val mingwX64Test by getting {
             dependsOn(nativeTest)
         }
-        cocoapods {
+        /*cocoapods {
             // Configure fields required by CocoaPods.
             summary = "DryRunKotlinMPP Kotlin/Native module CocoaPods"
             homepage = "https://github.com/abhimuktheeswarar/DryRunKotlinMPP"
-        }
+        }*/
     }
 }
 
@@ -258,3 +260,70 @@ signing {
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications)
 }
+
+//----------------------------------------------------------------------------------
+
+val xcFrameworkPath = "xcframework/${project.name}.xcframework"
+
+tasks.create<Delete>("deleteXcFramework") { delete = setOf(xcFrameworkPath) }
+
+val buildXcFramework by tasks.registering {
+    dependsOn("deleteXcFramework")
+    group = "build"
+    val mode = "Release"
+    val frameworks = arrayOf(
+        "iosArm64",
+        "iosX64",
+        "watchosArm64",
+        "watchosX64",
+        "tvosArm64",
+        "tvosX64",
+        "macosX64")
+        .map { kotlin.targets.getByName<KotlinNativeTarget>(it).binaries.getFramework(mode) }
+    inputs.property("mode", mode)
+    dependsOn(frameworks.map { it.linkTask })
+    doLast { buildXcFramework(frameworks) }
+}
+
+fun Task.buildXcFramework(frameworks: List<org.jetbrains.kotlin.gradle.plugin.mpp.Framework>) {
+    val buildArgs: () -> List<String> = {
+        val arguments = mutableListOf("-create-xcframework")
+        frameworks.forEach {
+            arguments += "-framework"
+            arguments += "${it.outputDirectory}/${project.name}.framework"
+        }
+        arguments += "-output"
+        arguments += xcFrameworkPath
+        arguments
+    }
+    exec {
+        executable = "xcodebuild"
+        args = buildArgs()
+    }
+}
+
+/*multiplatformSwiftPackage {
+    swiftToolsVersion("5.3")
+    packageName(project.name)
+    targetPlatforms {
+        iOS { v("10") }
+        tvOS { v("10") }
+        macOS { v("10") }
+        watchOS { v("5") }
+    }
+}*/
+
+/*fatFrameworkCocoaConfig {
+    frameworkName =  project.name
+    outputPath = "$rootDir/../xcf"
+    versionName = project.version as String
+    useXCFramework = true
+
+    cocoaPodRepoInfo {
+        summary = "This is a dry KMP framework"
+        homepage = "https://github.com/abhimuktheeswarar/DryRunKotlinMPP"
+        license = "The Apache License, Version 2.0"
+        authors = "\"Abhi Muktheeswarar\" => \"msabhi.open@gmail.com\""
+        gitUrl = "git@github.com/abhimuktheeswarar/DryRunKotlinMPP.git"
+    }
+}*/
