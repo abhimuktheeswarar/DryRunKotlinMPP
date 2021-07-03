@@ -2,9 +2,9 @@ Pod::Spec.new do |spec|
     spec.name                     = 'dryrun'
     spec.version                  = '1.0.2-RC'
     spec.homepage                 = 'https://github.com/abhimuktheeswarar/DryRunKotlinMPP'
-    spec.source                   = { :git => "Not Published", :tag => "Cocoapods/#{spec.name}/#{spec.version}" }
-    spec.authors                  = ''
-    spec.license                  = ''
+    spec.source                   = { :git => "https://github.com/abhimuktheeswarar/DryRunKotlinMPP.git", :tag => "v#{spec.version}" }
+    spec.authors                  = 'Abhi Muktheeswarar'
+    spec.license                  = 'The Apache Software License, Version 2.0'
     spec.summary                  = 'DryRunKotlinMPP Kotlin/Native module CocoaPods'
 
     spec.static_framework         = true
