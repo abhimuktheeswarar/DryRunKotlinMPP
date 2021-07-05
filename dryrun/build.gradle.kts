@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
-    //id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
+    id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
     //id("com.prof18.kmp.fatframework.cocoa") version "0.2.1"
     id("com.android.library")
     id("org.jetbrains.dokka") version Versions.dokka
@@ -34,6 +34,10 @@ kotlin {
     }
     ios()
     watchos()
+    /*watchosArm32()
+    watchosArm64()
+    watchosX86()
+    watchosX64()*/
     tvos()
     macosX64()
     linuxX64()
@@ -107,6 +111,30 @@ kotlin {
         val watchosTest by getting {
             dependsOn(appleTest)
         }
+        /*val watchosArm32Main by getting {
+            dependsOn(appleMain)
+        }
+        val watchosArm32Test by getting {
+            dependsOn(appleTest)
+        }
+        val watchosArm64Main by getting {
+            dependsOn(appleMain)
+        }
+        val watchosArm64Test by getting {
+            dependsOn(appleTest)
+        }
+        val watchosX86Main by getting {
+            dependsOn(appleMain)
+        }
+        val watchosX86Test by getting {
+            dependsOn(appleTest)
+        }
+        val watchosX64Main by getting {
+            dependsOn(appleMain)
+        }
+        val watchosX64Test by getting {
+            dependsOn(appleTest)
+        }*/
         val tvosMain by getting {
             dependsOn(appleMain)
         }
@@ -167,6 +195,10 @@ val packForXcode by tasks.creating(Sync::class) {
 }
 
 tasks.getByName("build").dependsOn(packForXcode)
+
+tasks.dokkaGfm.configure {
+    outputDirectory.set(rootDir.resolve("docs"))
+}
 
 //----------------------------------------------------------------------------------
 
@@ -274,8 +306,10 @@ val buildXcFramework by tasks.registering {
     val frameworks = arrayOf(
         "iosArm64",
         "iosX64",
+        /*"watchosArm32",
         "watchosArm64",
-        "watchosX64",
+        "watchosX86",
+        "watchosX64",*/
         "tvosArm64",
         "tvosX64",
         "macosX64")
@@ -302,20 +336,26 @@ fun Task.buildXcFramework(frameworks: List<org.jetbrains.kotlin.gradle.plugin.mp
     }
 }
 
-/*multiplatformSwiftPackage {
+multiplatformSwiftPackage {
     swiftToolsVersion("5.3")
     packageName(project.name)
+    outputDirectory(File(projectDir, "swiftpackage"))
     targetPlatforms {
-        iOS { v("10") }
-        tvOS { v("10") }
+        iOS { v("5") }
+        tvOS { v("9") }
         macOS { v("10") }
-        watchOS { v("5") }
-    }
-}*/
+        watchOS { v("4") }
+        //targets("watchosArm64") { v("4") }
+        //targets("watchosX86") { v("4") }
+        //targets("watchosX64") { v("4") }
 
-/*fatFrameworkCocoaConfig {
+    }
+}
+
+/*
+fatFrameworkCocoaConfig {
     frameworkName =  project.name
-    outputPath = "$rootDir/../xcf"
+    outputPath = "/Volumes/Code/Kotlin/DryRunKotlinMPP-cocoapods"
     versionName = project.version as String
     useXCFramework = true
 
@@ -324,6 +364,7 @@ fun Task.buildXcFramework(frameworks: List<org.jetbrains.kotlin.gradle.plugin.mp
         homepage = "https://github.com/abhimuktheeswarar/DryRunKotlinMPP"
         license = "The Apache License, Version 2.0"
         authors = "\"Abhi Muktheeswarar\" => \"msabhi.open@gmail.com\""
-        gitUrl = "git@github.com/abhimuktheeswarar/DryRunKotlinMPP.git"
+        gitUrl = "git@github.com/abhimuktheeswarar/DryRunKotlinMPP-cocoapods.git"
     }
-}*/
+}
+*/

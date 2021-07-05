@@ -1,0 +1,11 @@
+$dokka.format:gfm-v1
+$dokka.linkExtension:md
+$dokka.location:com.msabhi.dryrun////PointingToDeclaration/dryrun/com.msabhi.dryrun/index.md
+$dokka.location:com.msabhi.dryrun/Greeting///PointingToDeclaration/dryrun/com.msabhi.dryrun/-greeting/index.md
+$dokka.location:com.msabhi.dryrun/Greeting/Greeting/#/PointingToDeclaration/dryrun/com.msabhi.dryrun/-greeting/-greeting.md
+$dokka.location:com.msabhi.dryrun/Greeting/greeting/#/PointingToDeclaration/dryrun/com.msabhi.dryrun/-greeting/greeting.md
+$dokka.location:com.msabhi.dryrun/Platform///PointingToDeclaration/dryrun/com.msabhi.dryrun/-platform/index.md
+$dokka.location:com.msabhi.dryrun/Platform/Platform/#/PointingToDeclaration/dryrun/com.msabhi.dryrun/-platform/-platform.md
+$dokka.location:com.msabhi.dryrun/Platform/platform/#/PointingToDeclaration/dryrun/com.msabhi.dryrun/-platform/platform.md
+com.msabhi.dryrun
+

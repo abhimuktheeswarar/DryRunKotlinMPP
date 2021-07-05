@@ -1,6 +1,0 @@
-framework module dryrun {
-    umbrella header "dryrun.h"
-
-    export *
-    module * { export * }
-}
