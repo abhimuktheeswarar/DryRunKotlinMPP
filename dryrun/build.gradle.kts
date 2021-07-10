@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
-    id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
+    //id("com.chromaticnoise.multiplatform-swiftpackage") version "2.0.3"
     //id("com.prof18.kmp.fatframework.cocoa") version "0.2.1"
     id("com.android.library")
     id("org.jetbrains.dokka") version Versions.dokka
@@ -336,7 +336,7 @@ fun Task.buildXcFramework(frameworks: List<org.jetbrains.kotlin.gradle.plugin.mp
     }
 }
 
-multiplatformSwiftPackage {
+/*multiplatformSwiftPackage {
     swiftToolsVersion("5.3")
     packageName(project.name)
     outputDirectory(File(projectDir, "swiftpackage"))
@@ -350,7 +350,7 @@ multiplatformSwiftPackage {
         //targets("watchosX64") { v("4") }
 
     }
-}
+}*/
 
 /*
 fatFrameworkCocoaConfig {
