@@ -306,10 +306,10 @@ val buildXcFramework by tasks.registering {
     val frameworks = arrayOf(
         "iosArm64",
         "iosX64",
-        /*"watchosArm32",
+        //"watchosArm32",
         "watchosArm64",
-        "watchosX86",
-        "watchosX64",*/
+        //"watchosX86",
+        "watchosX64",
         "tvosArm64",
         "tvosX64",
         "macosX64")
