@@ -6,7 +6,7 @@ Pod::Spec.new do |spec|
     spec.authors                  = 'Abhi Muktheeswarar'
     spec.license                  = 'The Apache Software License, Version 2.0'
     spec.summary                  = 'DryRunKotlinMPP Kotlin/Native module CocoaPods'
-    spec.vendored_frameworks      = 'dryrun/xcframework/dryrun.xcframework'
+    spec.vendored_frameworks      = 'dryrun.xcframework'
     spec.static_framework         = true
     spec.libraries                = "c++"
     spec.module_name              = "#{spec.name}_umbrella"
