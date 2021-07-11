@@ -7,7 +7,7 @@ let package = Package(
     products: [
         .library(
             name: "Dryrun",
-            targets: ["dryrun"]
+            targets: ["Dryrun"]
         ),
     ],
     targets: [
