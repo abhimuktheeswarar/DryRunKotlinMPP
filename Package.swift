@@ -6,13 +6,13 @@ let package = Package(
     platforms: [.iOS("11"), .watchOS("4"), .tvOS("11"), .macOS("10.13"),],
     products: [
         .library(
-            name: "dryrun",
-            targets: ["dryrun"]
+            name: "Dryrun",
+            targets: ["Dryrun"]
         ),
     ],
     targets: [
         .binaryTarget(
-            name: "dryrun",
+            name: "Dryrun",
             path: "dryrun/xcframework/dryrun.xcframework"
         ),
     ]
