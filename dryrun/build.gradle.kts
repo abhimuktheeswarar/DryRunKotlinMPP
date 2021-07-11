@@ -277,9 +277,7 @@ val buildXcFramework by tasks.registering {
     val frameworks = arrayOf(
         "iosArm64",
         "iosX64",
-        //"watchosArm32",
         "watchosArm64",
-        //"watchosX86",
         "watchosX64",
         "tvosArm64",
         "tvosX64",
@@ -306,36 +304,3 @@ fun Task.buildXcFramework(frameworks: List<org.jetbrains.kotlin.gradle.plugin.mp
         args = buildArgs()
     }
 }
-
-/*multiplatformSwiftPackage {
-    swiftToolsVersion("5.3")
-    packageName(project.name)
-    outputDirectory(File(projectDir, "swiftpackage"))
-    targetPlatforms {
-        iOS { v("5") }
-        tvOS { v("9") }
-        macOS { v("10") }
-        watchOS { v("4") }
-        //targets("watchosArm64") { v("4") }
-        //targets("watchosX86") { v("4") }
-        //targets("watchosX64") { v("4") }
-
-    }
-}*/
-
-/*
-fatFrameworkCocoaConfig {
-    frameworkName =  project.name
-    outputPath = "/Volumes/Code/Kotlin/DryRunKotlinMPP-cocoapods"
-    versionName = project.version as String
-    useXCFramework = true
-
-    cocoaPodRepoInfo {
-        summary = "This is a dry KMP framework"
-        homepage = "https://github.com/abhimuktheeswarar/DryRunKotlinMPP"
-        license = "The Apache License, Version 2.0"
-        authors = "\"Abhi Muktheeswarar\" => \"msabhi.open@gmail.com\""
-        gitUrl = "git@github.com/abhimuktheeswarar/DryRunKotlinMPP-cocoapods.git"
-    }
-}
-*/
