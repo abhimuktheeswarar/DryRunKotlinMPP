@@ -25,7 +25,6 @@ kotlin {
         }
     }
     android {
-        //publishLibraryVariants("release", "debug")
         publishAllLibraryVariants()
     }
     js(BOTH) {
@@ -34,10 +33,6 @@ kotlin {
     }
     ios()
     watchos()
-    /*watchosArm32()
-    watchosArm64()
-    watchosX86()
-    watchosX64()*/
     tvos()
     macosX64()
     linuxX64()
@@ -111,30 +106,6 @@ kotlin {
         val watchosTest by getting {
             dependsOn(appleTest)
         }
-        /*val watchosArm32Main by getting {
-            dependsOn(appleMain)
-        }
-        val watchosArm32Test by getting {
-            dependsOn(appleTest)
-        }
-        val watchosArm64Main by getting {
-            dependsOn(appleMain)
-        }
-        val watchosArm64Test by getting {
-            dependsOn(appleTest)
-        }
-        val watchosX86Main by getting {
-            dependsOn(appleMain)
-        }
-        val watchosX86Test by getting {
-            dependsOn(appleTest)
-        }
-        val watchosX64Main by getting {
-            dependsOn(appleMain)
-        }
-        val watchosX64Test by getting {
-            dependsOn(appleTest)
-        }*/
         val tvosMain by getting {
             dependsOn(appleMain)
         }
