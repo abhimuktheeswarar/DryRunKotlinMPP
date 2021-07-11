@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.msabhi"
-version = "1.0.5-RC"
+version = "1.0.6-RC"
 
 kotlin {
     jvm {
