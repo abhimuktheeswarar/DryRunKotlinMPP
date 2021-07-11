@@ -2,17 +2,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "dryrun",
+    name: "Dryrun",
     platforms: [.iOS("11"), .watchOS("4"), .tvOS("11"), .macOS("10.13"),],
     products: [
         .library(
-            name: "dryrun",
+            name: "Dryrun",
             targets: ["dryrun"]
         ),
     ],
     targets: [
         .binaryTarget(
-            name: "dryrun",
+            name: "Dryrun",
             path: "dryrun/xcframework/dryrun.xcframework"
         ),
     ]
