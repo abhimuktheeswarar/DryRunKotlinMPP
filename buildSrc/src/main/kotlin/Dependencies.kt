@@ -16,8 +16,8 @@
 
 object Versions {
 
-    const val kotlin = "1.5.20"
-    const val coroutines = "1.5.0-native-mt"
+    const val kotlin = "1.5.21"
+    const val coroutines = "1.5.1-native-mt"
     const val dokka = "1.4.32"
 
     object Android {
