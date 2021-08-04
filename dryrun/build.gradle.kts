@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.msabhi"
-version = "1.0.8-SNAPSHOT"
+version = "1.0.6-RC"
 
 kotlin {
     jvm {
@@ -25,7 +25,7 @@ kotlin {
         }
     }
     android {
-        publishAllLibraryVariants()
+        publishLibraryVariants("release")
         publishLibraryVariantsGroupedByFlavor = true
     }
     js(BOTH) {
