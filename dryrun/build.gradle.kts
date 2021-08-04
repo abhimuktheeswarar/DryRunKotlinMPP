@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.msabhi"
-version = "1.0.6-RC"
+version = "1.0.7-SNAPSHOT"
 
 kotlin {
     jvm {
@@ -25,7 +25,7 @@ kotlin {
         }
     }
     android {
-        publishAllLibraryVariants()
+        publishLibraryVariants("release")
     }
     js(BOTH) {
         browser()
@@ -150,22 +150,6 @@ android {
         debugImplementation(kotlin("reflect", Versions.kotlin))
     }
 }
-
-val packForXcode by tasks.creating(Sync::class) {
-    group = "build"
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
-    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
-    val framework =
-        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
-    inputs.property("mode", mode)
-    dependsOn(framework.linkTask)
-    val targetDir = File(buildDir, "xcode-frameworks")
-    from({ framework.outputDirectory })
-    into(targetDir)
-}
-
-tasks.getByName("build").dependsOn(packForXcode)
 
 tasks.dokkaGfm.configure {
     outputDirectory.set(rootDir.resolve("docs"))
